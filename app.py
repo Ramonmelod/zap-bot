@@ -47,8 +47,67 @@ password_box.send_keys(senha)
 time.sleep(3)
 
 send_button = driver.find_element(by=By.XPATH, value='//*[@id="app"]/div[2]/div/div/div/div/section[1]/div/section/form/button')
+                                                    
 send_button.click()
+
+time.sleep(12)
+
+driver.get('https://canalpro.grupozap.com/ZAP_OLX/0/listings')
+
+time.sleep(5)
+options = driver.find_element(by=By.XPATH, value='//*[@id="top-page"]/section/div[4]/div/div/section/div/div/div/div[1]/div/section/div[2]/section[2]/section[2]/section[1]/div')
+options.click()
+
+time.sleep(10)
+
+editar = driver.find_element(by=By.XPATH, value='//*[@id="top-page"]/section/div[4]/div/div/section/div/div/div/div[1]/div/section/div[2]/section[2]/section[2]/section[1]/ul/li[1]/a')
+editar.click()
+
+
+# time.sleep(6)
+
+# salvar = driver.find_element(by=By.XPATH, value='//*[@id="top-page"]/div/div[1]/footer/div/div/button[2]/span')
+# salvar.click()
+
+
 time.sleep(100)
+
+
+
+
+
+
+#//*[@id="top-page"]/section/div[4]/div/div/section/div/div/div/div[1]/div/section/div[2]/section[2]/section[2]/section[1]/div
+
+
+
+# time.sleep(5)
+# options = driver.find_element(by=By.XPATH, value='//*[@id="top-page"]/section/div[4]/div/div/section/div/div/div/div[1]/div/section/div[2]/section[2]/section[2]/section[1]/div')
+# options.click()
+
+# time.sleep(3)
+
+# editar = driver.find_element(by=By.XPATH, value='//*[@id="top-page"]/section/div[4]/div/div/section/div/div/div/div[1]/div/section/div[2]/section[2]/section[2]/section[1]/ul/li[1]/a')
+# editar.click()
+# time.sleep(10)
+
+# save = driver.find_element(by=By.XPATH, value='//*[@id="top-page"]/div/div[1]/footer/div/div/button[2]')
+# save.click()
+
+# time.sleep(100)
+
+
+
+
+
+
+
+
+# ver anuncios //*[@id="performance"]/section/div[7]/div/section/div[2]/div/button
+# tres pontinhos: //*[@id="top-page"]/section/div[4]/div/div/section/div/div/div/div[1]/div/section/div[2]/section[2]/section[2]/section[1]/div
+# editar: //*[@id="top-page"]/section/div[4]/div/div/section/div/div/div/div[1]/div/section/div[2]/section[2]/section[2]/section[1]/ul/li[1]/a
+#salvar: //*[@id="top-page"]/div/div[1]/footer/div/div/button[2]
+
 
 
 # # LOGIN
