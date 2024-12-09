@@ -22,62 +22,53 @@ driver = webdriver.Chrome(service=service)
 driver.get(url)
 
 
+# accept the cookie options
+try: 
 
-try:
-    WebDriverWait(driver, 15).until(
+    cookie_button =  WebDriverWait(driver, 15).until(
         EC.presence_of_element_located((By.XPATH, '//*[@id="adopt-accept-all-button"]')) # this text is the signal that the page is loaded
     )
-except:
-    print("Botão de cookies não encontrado.")
-    driver.quit()
-
-time.sleep(3)
-
-try: 
-    #close the cookie option button
-    cookie_button = driver.find_element(by=By.XPATH, value='//*[@id="adopt-accept-all-button"]')
     cookie_button.click()
     time.sleep(3)
-except NoSuchElementException:
-    print("Botão de cookies não encontrado.")
-except ElementNotInteractableException:
-    print("Botão de cookies encontrado, mas não pode ser interagido.")
+    
 except Exception as e:
     print(f"Ocorreu um erro inesperado: {e}")
 
-
+# waits the presence of one element of the page wich shows that it was loaded
 try:
     WebDriverWait(driver, 10).until(
         EC.presence_of_element_located((By.XPATH, '//*[@id="app"]/div[2]/div/div/div/div/section[1]/div/section/form/div[1]/div/div[2]/div/div/input')) # this text is the signal that the page is loaded
     )
-except:
-    print("Botão de cookies não encontrado.")
+except Exception as e:
+    print(f"Ocorreu um erro inesperado: {e}")
     driver.quit()
 
 
 #login
+try:
+    login_box = driver.find_element(by=By.XPATH, value='//*[@id="app"]/div[2]/div/div/div/div/section[1]/div/section/form/div[1]/div/div[2]/div/div/input')
+    login_box.send_keys(login)
+    time.sleep(1)
+    password_box = driver.find_element(by=By.XPATH, value='//*[@id="app"]/div[2]/div/div/div/div/section[1]/div/section/form/div[2]/div/div[2]/div/div/input')
+    password_box.send_keys(senha)
+    time.sleep(1)
+    send_button = driver.find_element(by=By.XPATH, value='//*[@id="app"]/div[2]/div/div/div/div/section[1]/div/section/form/button')                                               
+    send_button.click()
+except Exception as e:
+    print(f"Ocorreu um erro inesperado no login: {e}")
 
-login_box = driver.find_element(by=By.XPATH, value='//*[@id="app"]/div[2]/div/div/div/div/section[1]/div/section/form/div[1]/div/div[2]/div/div/input')
-login_box.send_keys(login)
-time.sleep(1)
-password_box = driver.find_element(by=By.XPATH, value='//*[@id="app"]/div[2]/div/div/div/div/section[1]/div/section/form/div[2]/div/div[2]/div/div/input')
-password_box.send_keys(senha)
-time.sleep(1)
-send_button = driver.find_element(by=By.XPATH, value='//*[@id="app"]/div[2]/div/div/div/div/section[1]/div/section/form/button')                                               
-send_button.click()
 
-#listings
-
+# opening the pages that lists the ads
 
 try:
     WebDriverWait(driver, 10).until(
         EC.presence_of_element_located((By.XPATH,'//*[@id="top-page"]/div/section[1]/div[1]/button')) # holds the program flow until this element is present
     )
-except:
-    print("Botão de cookies não encontrado.")
+    driver.get('https://canalpro.grupozap.com/ZAP_OLX/0/listings') # calling the page with list the ads
+except Exception as e:
+    print(f"Ocorreu um erro inesperado no login: {e}")
     driver.quit()
 
-driver.get('https://canalpro.grupozap.com/ZAP_OLX/0/listings')
 
 #####################################################################################
 
@@ -96,21 +87,19 @@ driver.get('https://canalpro.grupozap.com/ZAP_OLX/0/listings')
 
 ##############time.sleep(1000)
 try:
-    WebDriverWait(driver, 10).until(
+   options = WebDriverWait(driver, 10).until(
         EC.presence_of_element_located((By.XPATH, '//*[@id="top-page"]/section/div[4]/div/div/section/div/div/div/div[1]/div/section/div[2]/section[2]/section[2]/section[1]/div')) # holds the program flow until the edit button is present
     )
-except:
-    print("Botão de cookies não encontrado.")
+   options.click()
+   editar = WebDriverWait(driver, 10).until(
+        EC.presence_of_element_located((By.XPATH, '//*[@id="top-page"]/section/div[4]/div/div/section/div/div/div/div[1]/div/section/div[2]/section[2]/section[2]/section[1]/ul/li[1]/a')) # holds the program flow until the edit button is present
+    )
+   editar.click() 
+
+except Exception as e:
+    print(f"Ocorreu um erro inesperado ao clicar no botão editar: {e}")
     driver.quit()
 
-
-options = driver.find_element(by=By.XPATH, value='//*[@id="top-page"]/section/div[4]/div/div/section/div/div/div/div[1]/div/section/div[2]/section[2]/section[2]/section[1]/div')
-options.click()
-
-time.sleep(10)
-
-editar = driver.find_element(by=By.XPATH, value='//*[@id="top-page"]/section/div[4]/div/div/section/div/div/div/div[1]/div/section/div[2]/section[2]/section[2]/section[1]/ul/li[1]/a')
-editar.click()
 
 time.sleep(10)
 try:
@@ -124,28 +113,13 @@ except Exception as e:
     print(f"Erro ao tentar ocultar o elemento: {e}")
 
 
-
-
-#//*[@id="category-0"]/div[2]/span[1]/label
-#//*[@id="572"]
-#//*[@id="app"]/div[2]/div[1]/div[2]/div/div/a/div/svg
-
-# time.sleep(8)
-# //*[@id="adopt-controller-button"]/svg/path[2]
-# //*[@id="adopt-controller-button"]/svg
-# //*[@id="adopt-controller-button"]/svg
-#//*[@id="adopt-controller-button"]
-#/html/body/div[2]
-
-
-salvar = WebDriverWait(driver, 10).until(
-    EC.element_to_be_clickable((By.XPATH, '//*[@id="top-page"]/div/div[1]/footer/div/div/button[2]'))
-)
-salvar.click()
-
-
-# salvar = driver.find_element(by=By.XPATH, value='//*[@id="top-page"]/div/div[1]/footer/div/div/button[2]')
-# salvar.click()
+try:
+    salvar = WebDriverWait(driver, 10).until(
+        EC.element_to_be_clickable((By.XPATH, '//*[@id="top-page"]/div/div[1]/footer/div/div/button[2]'))
+    )
+    salvar.click()
+except Exception as e:
+    print(f"Erro ao tentar salvar o anúncio: {e}")
 
 time.sleep(1000)
 
