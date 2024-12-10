@@ -1,5 +1,6 @@
 import os
 import json
+import random
 import time
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
@@ -10,8 +11,15 @@ from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
+# random variable used in time.sleep()
+random_start_time = random.randint(2, 6) # 240s = 4 min - 900s = 15 min
+random_action_time = random.randint(240, 900) # 240s = 4 min - 900s = 15 min
 
 
+# randomizing time to call the zap url
+start_time = random_start_time
+print("time to start: " + str(start_time))
+time.sleep(start_time)
 
 def remove_cookie_button():
     try:
@@ -69,16 +77,19 @@ options.add_argument('--window-size=1920,1080')  # Define the size of the window
 service = Service(ChromeDriverManager().install())
 driver = webdriver.Chrome(service=service, options=options)
 
+
+
+
 driver.get(url)
-#driver.save_screenshot('screenshot.png')
+#driver.save_screenshot('screenshot.png') # enable
 # accept the cookie options
 try: 
-    time.sleep(2)
+    time.sleep(random_action_time)
     cookie_button =  WebDriverWait(driver, 15).until(
         EC.presence_of_element_located((By.XPATH, '//*[@id="adopt-accept-all-button"]')) # this text is the signal that the page is loaded
     )
     cookie_button.click()
-    time.sleep(3)
+    time.sleep(random_action_time)
     
 except Exception as e:
     print(f"Ocorreu um erro inesperado: {e}")
@@ -114,11 +125,11 @@ for item in data:
     try:
         driver.get(f'https://canalpro.grupozap.com/ZAP_OLX/0/listings/update/{item["id"]}') # calling the page with list the ads
         print(item["id"])
-        time.sleep(5)
+        time.sleep(random_action_time)
         remove_cookie_button()
-        time.sleep(5)
+        time.sleep(random_action_time)
         save_button_click()
-        time.sleep(3)
+        time.sleep(random_action_time)
     except Exception as e:
         print(f"Ocorreu um erro: {e}")
 
