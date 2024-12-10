@@ -11,6 +11,8 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
 
+
+
 def remove_cookie_button():
     try:
         elemento = WebDriverWait(driver, 10).until(
@@ -52,10 +54,23 @@ url = os.getenv("URL")
 
 
 # sets the browser up
-service = Service(ChromeDriverManager().install())
-driver = webdriver.Chrome(service=service)
-driver.get(url)
+# Configurar as opções para o Chromium
+options = webdriver.ChromeOptions()
+options.binary_location = "/usr/bin/chromium-browser"  # path to Chromium
+options.add_argument('--no-sandbox')
+options.add_argument('--disable-dev-shm-usage')
+#options.add_argument('--headless')  # run without Grafic interface
+options.add_argument('--remote-debugging-port=9222')
+options.add_argument('--disable-gpu')  # Needed for some linux distros
+options.add_argument('--window-size=1920,1080')  # Define the size of the window
 
+
+# Configurar o serviço e o driver
+service = Service(ChromeDriverManager().install())
+driver = webdriver.Chrome(service=service, options=options)
+
+driver.get(url)
+#driver.save_screenshot('screenshot.png')
 # accept the cookie options
 try: 
     time.sleep(2)
