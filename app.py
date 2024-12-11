@@ -12,7 +12,7 @@ from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
-
+number_succesfull_saves = 0
 # access the variables from the dotEnv file
 login = os.getenv("LOGIN")
 senha = os.getenv("SENHA")
@@ -26,8 +26,10 @@ random_start_time = random.randint(2, 6) # 240s = 4 min - 900s = 15 min
 random_action_time = random.randint(1,3) # 240s = 4 min - 900s = 15 min
 
 # randomizing time to call the zap url
-send_message(bot_token, chat_id, random_start_time)
-print("time to start: " + str(random_start_time))
+
+message = f"time to start: {random_start_time}" 
+send_message(bot_token, chat_id, message)
+print(message)
 time.sleep(random_start_time)
 
 def remove_cookie_button():
@@ -35,20 +37,27 @@ def remove_cookie_button():
         elemento = WebDriverWait(driver, 10).until(
             EC.presence_of_element_located((By.XPATH,'/html/body/div[2]'))
         )
-        print("Elemento encontrado. Tentando ocultá-lo...")
+        print("Element found. trying to remove it...")
         driver.execute_script("arguments[0].remove();", elemento)
-        print("Elemento ocultado com sucesso.")
+        print("Element succesfully removed!.")
     except Exception as e:
-        print(f"Erro ao tentar ocultar o elemento: {e}")
+        print(f"The following error ocurred when tryed to remove the element: {e}")
 
-def save_button_click():
+def save_button_click(item):
     try:
         salvar = WebDriverWait(driver, 10).until(
             EC.element_to_be_clickable((By.XPATH, '//*[@id="top-page"]/div/div[1]/footer/div/div/button[2]'))
         )
         salvar.click()
+        #number_succesfull_saves += number_succesfull_saves # increments the value of number_succesfull_saves for control of the succes of the whole operation
+        message = f"Anúncio com o Id: {item} foi salvo!" 
+        send_message(bot_token, chat_id, message)
     except Exception as e:
         print(f"Erro ao tentar salvar o anúncio: {e}")
+        message = f"O erro: {e} ocorreu ao tentar salvar o item de id: {item}"
+        send_message(bot_token, chat_id, message)
+    
+         
 
 
 
@@ -133,7 +142,7 @@ for item in data:
         time.sleep(random_action_time)
         remove_cookie_button()
         time.sleep(random_action_time)
-        save_button_click()
+        save_button_click(item["id"])
         time.sleep(random_action_time)
     except Exception as e:
         print(f"Ocorreu um erro: {e}")
