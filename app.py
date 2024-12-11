@@ -2,6 +2,7 @@ import os
 import json
 import random
 import time
+from telegram import send_message
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
@@ -11,15 +12,23 @@ from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
+
+# access the variables from the dotEnv file
+login = os.getenv("LOGIN")
+senha = os.getenv("SENHA")
+url = os.getenv("URL")
+bot_token = os.getenv("BOT_TOKEN")
+chat_id = os.getenv("CHAT_ID")
+
+
 # random variable used in time.sleep()
 random_start_time = random.randint(2, 6) # 240s = 4 min - 900s = 15 min
-random_action_time = random.randint(240, 900) # 240s = 4 min - 900s = 15 min
-
+random_action_time = random.randint(1,3) # 240s = 4 min - 900s = 15 min
 
 # randomizing time to call the zap url
-start_time = random_start_time
-print("time to start: " + str(start_time))
-time.sleep(start_time)
+send_message(bot_token, chat_id, random_start_time)
+print("time to start: " + str(random_start_time))
+time.sleep(random_start_time)
 
 def remove_cookie_button():
     try:
@@ -55,10 +64,6 @@ except json.JSONDecodeError:
     print(f"Erro ao decodificar o arquivo JSON {file_path}. Verifique o formato do arquivo.")
 
 
-# access the variables from the dotEnv file
-login = os.getenv("LOGIN")
-senha = os.getenv("SENHA")
-url = os.getenv("URL")
 
 
 # sets the browser up
