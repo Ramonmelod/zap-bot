@@ -35,11 +35,6 @@ then:
   source virtual_env/bin/activate
 ```
 
-```sh
-sudo apt install chromium-chromedriver
-
-```
-
 ## Installing the _chromium-browser_ and the _chromium-chromedriver_
 
 - For this project you need to install the dependecies `chromium-browser` and the `chromium-chromedriver`
