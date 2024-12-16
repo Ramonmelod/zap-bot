@@ -44,12 +44,14 @@ def remove_cookie_button():
         print(f"The following error ocurred when tryed to remove the element: {e}")
 
 def save_button_click(item):
+    global number_succesfull_saves  # makes this function to use the global variable number_succesfull_saves instead of creating a new one
     try:
         salvar = WebDriverWait(driver, 10).until(
             EC.element_to_be_clickable((By.XPATH, '//*[@id="top-page"]/div/div[1]/footer/div/div/button[2]'))
         )
         salvar.click()
-        #number_succesfull_saves += number_succesfull_saves # increments the value of number_succesfull_saves for control of the succes of the whole operation
+        number_succesfull_saves += 1 # increments the value of number_succesfull_saves for control of the succes of the whole operation
+        print("number_succesfull_saves: " + str(number_succesfull_saves))
         message = f"Anúncio com o Id: {item} foi salvo!" 
         send_message(bot_token, chat_id, message)
     except Exception as e:
@@ -81,7 +83,7 @@ options = webdriver.ChromeOptions()
 options.binary_location = "/usr/bin/chromium-browser"  # path to Chromium
 options.add_argument('--no-sandbox')
 options.add_argument('--disable-dev-shm-usage')
-#options.add_argument('--headless')  # run without Grafic interface
+options.add_argument('--headless')  # run without Grafic interface
 options.add_argument('--remote-debugging-port=9222')
 options.add_argument('--disable-gpu')  # Needed for some linux distros
 options.add_argument('--window-size=1920,1080')  # Define the size of the window
@@ -146,5 +148,13 @@ for item in data:
         time.sleep(random_action_time)
     except Exception as e:
         print(f"Ocorreu um erro: {e}")
+if len(data) == number_succesfull_saves:
+    print(f"todos os {len(data)} anúncios foram atualizados com sucesso!")
+    message = f"todos os {len(data)} anúncios foram atualizados com sucesso!"
+    send_message(bot_token, chat_id, message)
+else:
+    print(f"Dos {len(data)} anúncios, {number_succesfull_saves} foram salvos")
+    message = f"Dos {len(data)} anúncios, {number_succesfull_saves} foram salvos" 
+    send_message(bot_token, chat_id, message)
 
 driver.quit()
