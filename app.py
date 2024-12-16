@@ -89,8 +89,8 @@ options.add_argument('--disable-gpu')  # Needed for some linux distros
 options.add_argument('--window-size=1920,1080')  # Define the size of the window
 
 
-# Configurar o serviço e o driver
-service = Service(ChromeDriverManager().install())
+# Sets the service and the driver
+service = Service(ChromeDriverManager().install()) # service = Service("/usr/bin/chromedriver") # here is the path of the chromedriver in the current S.O
 driver = webdriver.Chrome(service=service, options=options)
 
 
