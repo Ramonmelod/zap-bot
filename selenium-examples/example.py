@@ -17,14 +17,18 @@ options.add_argument('--window-size=1920,1080')  # Define the size of the window
 
 driver = None  # Gives a default value for the driver
 
+
+
+
 try:
-    # Sets the service and starts the driver
+ # Sets the service and starts the driver
+    service = Service(ChromeDriverManager().install())  # service = Service("/usr/bin/chromedriver") # here is the path of the chromedriver in the current S.O
+
+
     driver = webdriver.Chrome(
-        service=Service(ChromeDriverManager().install()),
-        options=options
+    service=service,
+    options=options
     )
-
-
     driver.get("https://www.example.com")
     driver.save_screenshot('screenshot.png')
     print("Acessou a URL com sucesso!")
