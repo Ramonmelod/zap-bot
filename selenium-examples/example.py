@@ -28,6 +28,7 @@ try:
     driver.get("https://www.example.com")
     driver.save_screenshot('screenshot.png')
     print("Acessou a URL com sucesso!")
+    print("A pasta selenium-examples agora deve ter um print da pagina acessada")
 
 
     time.sleep(5)
