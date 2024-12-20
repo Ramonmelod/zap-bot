@@ -19,6 +19,8 @@ senha = os.getenv("SENHA")
 url = os.getenv("URL")
 bot_token = os.getenv("BOT_TOKEN")
 chat_id = os.getenv("CHAT_ID")
+chat_id_Gab = os.getenv("GAB_CHAT_ID")
+
 
 
 # random variable used in time.sleep()
@@ -29,6 +31,7 @@ random_action_time = random.randint(1,3) # 240s = 4 min - 900s = 15 min
 
 message = f"time to start: {random_start_time}" 
 send_message(bot_token, chat_id, message)
+send_message(bot_token, chat_id_Gab, message) # sends the message to Gab
 print(message)
 time.sleep(random_start_time)
 
@@ -91,6 +94,7 @@ options.add_argument('--window-size=1920,1080')  # Define the size of the window
 
 # Sets the service and the driver
 service = Service(ChromeDriverManager().install()) # service = Service("/usr/bin/chromedriver") # here is the path of the chromedriver in the current S.O
+print(service)
 driver = webdriver.Chrome(service=service, options=options)
 
 
@@ -152,9 +156,11 @@ if len(data) == number_succesfull_saves:
     print(f"todos os {len(data)} anúncios foram atualizados com sucesso!")
     message = f"todos os {len(data)} anúncios foram atualizados com sucesso!"
     send_message(bot_token, chat_id, message)
+    send_message(bot_token, chat_id_Gab, message) # sends the message to Gab
 else:
     print(f"Dos {len(data)} anúncios, {number_succesfull_saves} foram salvos")
     message = f"Dos {len(data)} anúncios, {number_succesfull_saves} foram salvos" 
     send_message(bot_token, chat_id, message)
+    send_message(bot_token, chat_id_Gab, message) # sends the message to Gab
 
 driver.quit()
