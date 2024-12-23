@@ -31,7 +31,7 @@ random_action_time = random.randint(1,3) # 240s = 4 min - 900s = 15 min
 
 message = f"time to start: {random_start_time}" 
 send_message(bot_token, chat_id, message)
-send_message(bot_token, chat_id_Gab, message) # sends the message to Gab
+#send_message(bot_token, chat_id_Gab, message) # sends the message to Gab
 print(message)
 time.sleep(random_start_time)
 
@@ -139,6 +139,8 @@ except Exception as e:
 WebDriverWait(driver, 10).until(
     EC.presence_of_element_located((By.XPATH,'//*[@id="top-page"]/div/section[1]/div[1]/button')) # holds the program flow until this element is present
 )
+driver.save_screenshot("./shots/screenshot.png")
+
 
 # opening the edit pages of the ads and saving them
 for item in data:
@@ -156,11 +158,11 @@ if len(data) == number_succesfull_saves:
     print(f"todos os {len(data)} anúncios foram atualizados com sucesso!")
     message = f"todos os {len(data)} anúncios foram atualizados com sucesso!"
     send_message(bot_token, chat_id, message)
-    send_message(bot_token, chat_id_Gab, message) # sends the message to Gab
+ #   send_message(bot_token, chat_id_Gab, message) # sends the message to Gab
 else:
     print(f"Dos {len(data)} anúncios, {number_succesfull_saves} foram salvos")
     message = f"Dos {len(data)} anúncios, {number_succesfull_saves} foram salvos" 
     send_message(bot_token, chat_id, message)
-    send_message(bot_token, chat_id_Gab, message) # sends the message to Gab
+   # send_message(bot_token, chat_id_Gab, message) # sends the message to Gab
 
 driver.quit()
